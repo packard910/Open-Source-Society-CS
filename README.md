@@ -1,4 +1,4 @@
-# Open-Source-Society-CS
+# Open Source Society University Computer Science Program
 
 This is the repository for my [Open Source Society University Computer Science program](https://github.com/open-source-society/computer-science#about).  It contains my coursework and projects for the online courses listed below. 
 
