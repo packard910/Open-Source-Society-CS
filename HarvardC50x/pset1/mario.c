@@ -6,21 +6,17 @@ int main(void)
     int height;
     int i,j;
 
-    while(true)
-    {
+    do{
         printf("height: ");
-        height = GetInt();
-        if((height>23) || (height<1))
-        {
-            printf("Please input a positive integer no greater than 24\n");
-        }
-        else break;
+        height = GetInt();      
     }
-    for(i=1;i<height+1;i++)
+    while((height>23) || (height<1));
+    
+    for(i=0;i<height;i++)
     {
-        for(j=1;j<height+2;j++)
+        for(j=0;j<height+1;j++)
         {
-            if(j>height-i)
+            if(j>height-i+1)
             {
                 printf("#");
             }
@@ -28,5 +24,4 @@ int main(void)
         }
         printf("\n");
     }
-    
 }
