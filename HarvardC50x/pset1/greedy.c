@@ -12,7 +12,7 @@ int main(void)
         printf("O hai! How much change is owed?\n"); 
         change = GetFloat();
     }
-    while(change<0)
+    while(change<0);
     
     numberofCents=round(change*100);
     
