@@ -16,7 +16,7 @@ int main(void)
     {
         for(j=0;j<height+1;j++)
         {
-            if(j>height-i+1)
+            if(j>height-(i+2))
             {
                 printf("#");
             }
