@@ -8,13 +8,11 @@ int main(void)
     int numberofCents;
     int totalCoins = 0;
     
-    while(true){
+    do{
         printf("O hai! How much change is owed?\n"); 
         change = GetFloat();
-        if(change>0){
-            break;
-        }
     }
+    while(change<0)
     
     numberofCents=round(change*100);
     
