@@ -145,91 +145,98 @@ int main(int argc, char* argv[])
 
             // log request-line
             printf("%s", line);
-
-            // pointers for request-line validation
-            char *methodLoc, *reqTargLoc, *httpVerLoc, *endlineLoc;
-            char *extraSpacePtr = NULL;
-            char *absPathLoc, *queryLoc;
             
-            // find components of request-line              
-            methodLoc = strtok(line," ");
-            reqTargLoc = strtok(NULL," ");
-            httpVerLoc = strtok(NULL," ");
-            extraSpacePtr = strtok(NULL," ");            
-            httpVerLoc = strtok(httpVerLoc,"\r");
-            endlineLoc = strtok(NULL,"\0");
-
-            // parse request-target into path and query
-            absPathLoc = reqTargLoc;
-            if(absPathLoc != NULL)
+            // find components of request-line for validation
+            //   [0]: method
+            //   [1]: request-target
+            //   [2]: HTTP version
+            //   [3]: extra characters (if not NULL, 400)
+            //   [4]: endline token
+            //   [5]: absolute-path
+            //   [6]: query (optional)
+            char* requestComp[7];
+               
+            // break into substrings separated by whitespace         
+            requestComp[0] = strtok(line," ");
+            for(int i=1; i<4; i++)
             {
-                queryLoc = strchr(reqTargLoc,'?');
-                if(queryLoc != NULL)
+                requestComp[i] = strtok(NULL, " ");
+            }             
+            // separate CRLF from HTTP version substring
+            requestComp[2] = strtok(requestComp[2],"\r");
+            requestComp[4] = strtok(NULL,"\0"); 
+            // parse request-target into absolute path and query
+            requestComp[5] = requestComp[1]; 
+            if(requestComp[5] != NULL)
+            {
+                requestComp[6] = strchr(requestComp[5],'?');
+                if(requestComp[6] != NULL)
                 {
-                    queryLoc[0] = '\0';
-                    queryLoc = &queryLoc[1];
-                }
-            }
-
-            // ensure that request-line contains enough components
-            if(methodLoc == NULL)
+                    requestComp[6][0] = '\0';
+                    requestComp[6] = &requestComp[6][1];
+                }    
+            }          
+            
+            // ensure that request-line contains three substrings
+            if(requestComp[0] == NULL)
             {
                 error(400);
                 continue;
             }
-            else if(absPathLoc == NULL)
+            else if(requestComp[1] == NULL)
             {
                 error(400);
                 continue;
             }
-            else if(httpVerLoc == NULL)
-            {
-                error(400);
-                continue;
-            }
-            else if(endlineLoc == NULL)
+            else if(requestComp[2] == NULL)
             {
                 error(400);
                 continue;
             }
             // ensure no extra whitespace 
-            else if(extraSpacePtr != NULL)
+            else if(requestComp[3] != NULL)
             {
                 error(400);
                 continue;
             }
             // ensure CRLF represents "\r\n"
-            else if(strcmp(endlineLoc,"\n") != 0)
+            else if((requestComp[4]==NULL) || (strcmp(requestComp[4],"\n")) != 0)
             {
                 error(400);
                 continue;
-            }
+            }            
+            // forbid quotation marks in query
+            else if((requestComp[6]!=NULL) && (strchr(requestComp[6],'\"')!=NULL))
+            {
+                error(400);
+                continue;
+            }   
+            // specification unclear - also forbid quotation marks in absolute-path
+            else if(strchr(requestComp[5],'\"')!=NULL)
+            {
+                error(400);
+                continue;
+            }   
             // ensure that path location starts with "/"
-            else if(absPathLoc[0] != '/')
+            else if(requestComp[5][0] != '/')
             {
                 error(501);
                 continue;
             }
-            // ensure that absolute-path does not contain quotation mark
-            else if(strchr(absPathLoc,'\"') != NULL)
-            {
-                error(400);
-                continue;
-            }
             // allow only GET method
-            else if(strcmp(methodLoc,"GET") != 0)
+            else if(strcmp(requestComp[0],"GET") != 0)
             {
                 error(405);
                 continue;
             }
             // require http v1.1
-            else if(strcmp(httpVerLoc,"HTTP/1.1")!=0)
+            else if(strcmp(requestComp[2],"HTTP/1.1")!=0)
             {
                 error(505);
                 continue;
             }
             // ensure that absolute-path contains file extension
-            else if(strchr(absPathLoc,'.') == NULL)
+            else if(strchr(requestComp[5],'.') == NULL)
             {
                 error(501);
                 continue;
@@ -237,19 +244,19 @@ int main(int argc, char* argv[])
 
             // extract query from request-target
             char query[LimitRequestFieldSize];
-            if (queryLoc == NULL)
+            if (requestComp[6] == NULL)
             {
                 query[0] = '\0';
             }
             else
             {  
-                strcpy(query,queryLoc);
+                strcpy(query,requestComp[6]);
             }
 
             // concatenate root and absolute-path
             char path[LimitRequestFieldSize];
             strcpy(path,root);
-            strcat(path,absPathLoc);
+            strcat(path,requestComp[5]);
 
             // ensure path exists
             if(access(path,F_OK)!=0)
