@@ -1,0 +1,143 @@
+/**
+ * styles.css
+ *
+ * Computer Science 50
+ * Problem Set 7
+ *
+ * Global CSS.
+ */
+
+.container
+{
+    /* center contents */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#middle .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+#bottom
+{
+    /* shrink bottom's font size */
+    font-size: smaller;
+
+    /* surround with whitespace */
+    margin: 20px;
+}
+
+/* style for index portfolio display table */
+.portfolio-table table
+{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* styles for index portfolio cells */
+.symbol, .name, .shares, .price, .total 
+{
+    text-align: left;
+    border-bottom: 1pt solid black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.symbolHd, .nameHd, .sharesHd, .priceHd, .totalHd 
+{
+    text-align: left;
+    border-bottom: 1pt solid black;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.nameHd
+{
+    /*width: 250px;*/
+}
+.symbolHd
+{
+    width: 120px;
+} 
+.sharesHd, .priceHd, .totalHd
+{ 
+    width: 90px;
+}
+.totalamt, .totalname 
+{
+    text-align: left;
+    padding-top: 25px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+// style for history table
+.history-table table
+{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.history-table table th
+{
+    text-align: left;
+    border-bottom: 1pt solid black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 120px;
+}
+
+.hist
+{
+    text-align: left;
+    border-bottom: 1pt solid black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 120px;
+}
+
+.histdate
+{
+    text-align: left;
+    border-bottom: 1pt solid black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 250px;
+}
+
+// styling for index on pages
+#topindex
+{
+    margin-bottom: 40px;
+}
+
+#topindex ul
+{
+    list-style-type: none;
+    margin: 0;
+    margin-bottom: 40px;
+    padding: 0;
+}
+
+#topindex li
+{
+    display: inline;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
