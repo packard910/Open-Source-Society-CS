@@ -1,6 +1,6 @@
 # OSS University Computer Science
 
-This is the repository for my work on the [Open Source Society University Computer Science program](https://github.com/open-source-society/computer-science#about).  It contains my coursework and projects for the online courses listed below. 
+This is the repository for my work on the [Open Source Society University Computer Science program](https://github.com/open-source-society/computer-science#about).  It contains my coursework and projects for the online courses listed below.  A record of the courses I've completed is also available on [this Student Profiles page](https://github.com/open-source-society/computer-science/issues/31#issuecomment-145747450).
 
 ## Introduction to Computer Science
 
